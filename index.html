@@ -652,7 +652,7 @@
 
         async function initConversation() {
             STATE.step = 'ASK_NAME';
-            await botSay("Hello! I'm RoofFlow AI. I can help you with roofing services or automation. To get started, may I have your name?", 500);
+            await botSay("Hello! I'm RoofFlow AI. I can help you with AI automation for your roofing business. To get started, may I have your name?", 500);
         }
 
         async function handleConversationStep(userMessage) {
@@ -674,19 +674,12 @@
                         return;
                     }
                     STATE.lead.email = userMessage;
-                    STATE.step = 'ASK_SERVICE';
-                    removeTypingIndicator(typingId);
-                    await botSay("Thanks! Lastly, are you looking for 'Roofing Services' or 'AI Automation' for your business?");
-                    return;
-                }
-
-                if (STATE.step === 'ASK_SERVICE') {
-                    STATE.lead.service = userMessage;
-                    STATE.step = 'AI_CHAT';
+                    STATE.lead.service = 'AI Automation'; // Defaulting to AI Automation
 
                     // Send to n8n
                     await sendLeadToWebhook(STATE.lead);
 
+                    STATE.step = 'AI_CHAT';
                     removeTypingIndicator(typingId);
                     await botSay("Perfect. I've noted that down. A specialist will be in touch shortly.");
                     await botSay("In the meantime, feel free to ask me anything about our services!");
